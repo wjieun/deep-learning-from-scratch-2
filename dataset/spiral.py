@@ -5,7 +5,7 @@ import numpy as np
 def load_data(seed=1984):
     np.random.seed(seed)
     N = 100  # 클래스당 샘플 수
-    DIM = 2  # 데어터 요소 수
+    DIM = 2  # 데이터 요소 수
     CLS_NUM = 3  # 클래스 수
 
     x = np.zeros((N*CLS_NUM, DIM))

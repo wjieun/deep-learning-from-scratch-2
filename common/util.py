@@ -28,7 +28,7 @@ def cos_similarity(x, y, eps=1e-8):
 
     :param x: 벡터
     :param y: 벡터
-    :param eps: '0으로 나누기'를 방지하기 위한 작은 값
+    :param eps: '0으로 나누기'를 방지하기 위한 작은 값 (엡실론)
     :return:
     '''
     nx = x / (np.sqrt(np.sum(x ** 2)) + eps)
@@ -138,7 +138,7 @@ def ppmi(C, verbose=False, eps = 1e-8):
 
     for i in range(C.shape[0]):
         for j in range(C.shape[1]):
-            pmi = np.log2(C[i, j] * N / (S[j]*S[i]) + eps)
+            pmi = np.log2(C[i, j] * N / (S[j]*S[i]) + eps) # (C(x, y)•N)/(C(x)C(y))
             M[i, j] = max(0, pmi)
 
             if verbose:

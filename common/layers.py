@@ -20,10 +20,13 @@ class MatMul:
         W, = self.params
         dx = np.dot(dout, W.T)
         dW = np.dot(self.x.T, dout)
+        # 생략 기호는 넘파이 배열의 덮어쓰기를 수행
+        # grads[0] = dW처럼 그냥 할당하면 '얕은 복사'가 이루어지고
+        # grads[0][...] = dW처럼 덮어쓰면 '깊은 복사'가 이루어짐
         self.grads[0][...] = dW
         return dx
 
-
+# Affine의 역전파는 MatMul 노드와 Repeat 노드의 역전파를 수행하면 구할 수 있음
 class Affine:
     def __init__(self, W, b):
         self.params = [W, b]
@@ -40,8 +43,11 @@ class Affine:
         W, b = self.params
         dx = np.dot(dout, W.T)
         dW = np.dot(self.x.T, dout)
+        # Repeat 노드의 역전파는 np.sum() 메서드로 계산할 수 있는데
+        # 이때 행렬의 형상을 잘 살펴보고 어느 축(axis)으로 합을 구할지 명시
         db = np.sum(dout, axis=0)
 
+        # 가중치 매개변수의 기울기를 인스턴스 변수 grads에 저장
         self.grads[0][...] = dW
         self.grads[1][...] = db
         return dx
@@ -98,10 +104,12 @@ class Sigmoid:
 
     def forward(self, x):
         out = 1 / (1 + np.exp(-x))
+        # 순전파 때는 출력을 인스턴스 변수 out에 저장하고
         self.out = out
         return out
 
     def backward(self, dout):
+        # 역전파 계산 시 이 out 변수를 사용
         dx = dout * (1.0 - self.out) * self.out
         return dx
 
