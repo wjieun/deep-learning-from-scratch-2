@@ -11,8 +11,8 @@ dh = np.ones((N, H))
 
 np.random.seed(3) # 재현할 수 있도록 난수의 시드 고정
 
-Wh = np.random.randn(H, H)
-#Wh = np.random.randn(H, H) * 0.5
+# Wh = np.random.randn(H, H)
+Wh = np.random.randn(H, H) * 0.5
 
 norm_list = []
 for t in range(T):
